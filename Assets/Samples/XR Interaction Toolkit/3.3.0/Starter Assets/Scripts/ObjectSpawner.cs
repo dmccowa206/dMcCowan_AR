@@ -9,6 +9,7 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
     /// </summary>
     public class ObjectSpawner : MonoBehaviour
     {
+        [SerializeField] Material[] materials;
         [SerializeField]
         [Tooltip("The camera that objects will face when spawned. If not set, defaults to the main camera.")]
         Camera m_CameraToFace;
@@ -222,6 +223,10 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
 
             var objectIndex = isSpawnOptionRandomized ? Random.Range(0, m_ObjectPrefabs.Count) : m_SpawnOptionIndex;
             var newObject = Instantiate(m_ObjectPrefabs[objectIndex]);
+            if (materials != null)
+            {
+                newObject.GetComponentInChildren<MeshRenderer>().material = materials[Random.Range(0, materials.Length)];
+            }
             if (m_SpawnAsChildren)
                 newObject.transform.parent = transform;
 
